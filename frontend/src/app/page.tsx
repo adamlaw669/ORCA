@@ -474,7 +474,7 @@ function Footer() {
           <p className="text-sm text-[rgba(255,255,255,0.5)] leading-relaxed max-w-[240px] mb-6">
             Omnichannel retention and complaint AI for Nigerian telecoms.
           </p>
-          <p className="text-[13px] text-[rgba(255,255,255,0.3)]">2025 ORCA. All rights reserved.</p>
+          <p className="text-[13px] text-[rgba(255,255,255,0.3)]">{new Date().getFullYear()} ORCA. All rights reserved.</p>
         </div>
 
         <div>
