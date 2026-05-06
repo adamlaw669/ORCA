@@ -7,6 +7,15 @@ import type {
   PriorityRow,
   QueueList,
 } from './types';
+import {
+  MOCK_HEALTH,
+  MOCK_HEATMAP,
+  MOCK_LIVE_STATS,
+  MOCK_MENTION_DETAIL,
+  MOCK_MENTION_LIST,
+  MOCK_PRIORITY_ROWS,
+  MOCK_QUEUE_LIST,
+} from './mock';
 
 const BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:8000';
 
@@ -26,9 +35,17 @@ async function req<T>(path: string, init?: RequestInit): Promise<T> {
   return res.json() as Promise<T>;
 }
 
+async function tryReq<T>(path: string, fallback: T, init?: RequestInit): Promise<T> {
+  try {
+    return await req<T>(path, init);
+  } catch {
+    return fallback;
+  }
+}
+
 export const api = {
-  health: () => req<Health>('/api/health'),
-  liveStats: () => req<LiveStats>('/api/stats/live'),
+  health: () => tryReq<Health>('/api/health', MOCK_HEALTH),
+  liveStats: () => tryReq<LiveStats>('/api/stats/live', MOCK_LIVE_STATS),
 
   mentions: (params: {
     category?: string;
@@ -44,10 +61,11 @@ export const api = {
       if (v !== undefined && v !== null && v !== '') q.set(k, String(v));
     });
     const qs = q.toString();
-    return req<MentionList>(`/api/mentions${qs ? '?' + qs : ''}`);
+    return tryReq<MentionList>(`/api/mentions${qs ? '?' + qs : ''}`, MOCK_MENTION_LIST);
   },
 
-  mention: (id: number) => req<MentionDetail>(`/api/mentions/${id}`),
+  mention: (id: number) =>
+    tryReq<MentionDetail>(`/api/mentions/${id}`, MOCK_MENTION_DETAIL),
 
   draftReply: (id: number) =>
     req<{ ai_reply: string }>(`/api/mentions/${id}/reply/draft`, {
@@ -67,7 +85,7 @@ export const api = {
       { method: 'POST', body: JSON.stringify({ handle, max_items }) }
     ),
 
-  queue: () => req<QueueList>('/api/queue'),
+  queue: () => tryReq<QueueList>('/api/queue', MOCK_QUEUE_LIST),
 
   queueAction: (
     escalationId: number,
@@ -79,7 +97,10 @@ export const api = {
     }),
 
   priorityMatrix: (days = 7) =>
-    req<{ rows: PriorityRow[]; window_days: number }>(`/api/intelligence/priority-matrix?days=${days}`),
+    tryReq<{ rows: PriorityRow[]; window_days: number }>(
+      `/api/intelligence/priority-matrix?days=${days}`,
+      { rows: MOCK_PRIORITY_ROWS, window_days: days }
+    ),
 
-  heatmap: () => req<Heatmap>('/api/intelligence/heatmap'),
+  heatmap: () => tryReq<Heatmap>('/api/intelligence/heatmap', MOCK_HEATMAP),
 };
