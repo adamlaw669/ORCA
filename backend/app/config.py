@@ -1,44 +1,48 @@
-<<<<<<< HEAD
+import os
+from typing import ClassVar, Dict, Any
+from dotenv import load_dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+load_dotenv()
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    apify_token: str = ""
+    # Apify (for Twitter scraping)
+    apify_token: str = os.getenv("APIFY_TOKEN", "")
     apify_actor: str = "apidojo/tweet-scraper"
 
+    # Operator info
     operator_handle: str = "MTNNigeria"
     operator_name: str = "MTN Nigeria"
 
-    anthropic_api_key: str = ""
+    # LLM (Anthropic)
+    anthropic_api_key: str = os.getenv("ANTHROPIC_API_KEY", "")
     anthropic_model: str = "claude-sonnet-4-6"
 
-    frontend_origin: str = "http://localhost:3000"
-    database_url: str = "sqlite:///./orca.db"
-
-
-settings = Settings()
-=======
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-class Settings:
-    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
-    SPITCH_API_KEY: str = os.getenv("SPITCH_API_KEY", "")
+    # LLM (Google Gemini)
+    gemini_api_key: str = os.getenv("GEMINI_API_KEY", "")
     
+    # TTS (Spitch)
+    spitch_api_key: str = os.getenv("SPITCH_API_KEY", "")
+
     # Africa's Talking Settings
-    AT_USERNAME: str = os.getenv("AT_USERNAME", "sandbox")
-    AT_API_KEY: str = os.getenv("AT_API_KEY", "")
-    AT_PHONE_NUMBER: str = os.getenv("AT_PHONE_NUMBER", "")
+    at_username: str = os.getenv("AT_USERNAME", "sandbox")
+    at_api_key: str = os.getenv("AT_API_KEY", "")
+    at_phone_number: str = os.getenv("AT_PHONE_NUMBER", "")
 
-    # Redis (single URL for production, e.g. redis://...)
-    REDIS_URL: str = os.getenv("REDIS_URL", "")
+    # Redis
+    redis_url: str = os.getenv("REDIS_URL", "")
 
-    # Baba Sikira profile (hardcoded)
-    BABA_PROFILE = {
+    # Frontend
+    frontend_origin: str = os.getenv("FRONTEND_ORIGIN", "http://localhost:3000")
+    
+    # Database
+    database_url: str = os.getenv("DATABASE_URL", "sqlite:///./orca.db")
+
+    # Baba Sikira profile (hardcoded for demo)
+    BABA_PROFILE: ClassVar[Dict[str, Any]] = {
         "name": "Baba Sikira",
         "phone": "+2348123456789",
         "plan": "MTN Pulse",
@@ -48,5 +52,5 @@ class Settings:
         "churn_risk": "medium-high"
     }
 
+
 settings = Settings()
->>>>>>> 1913034eb5a34835c31253f370bb57628222bdc3

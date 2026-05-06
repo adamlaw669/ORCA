@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(python -c \"from app.routers.chat import router; print\\('chat router OK'\\)\")",
+      "Bash(npx next *)"
     ]
   }
 }

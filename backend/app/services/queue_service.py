@@ -8,11 +8,11 @@ from app.config import settings
 QUEUE_FILE = "conversation_queue.json"
 REDIS_KEY = "orca:complaints"
 
-# Redis client (uses REDIS_URL if set, otherwise skips)
+# Redis client (uses redis_url if set, otherwise skips)
 r = None
-if settings.REDIS_URL:
+if settings.redis_url:
     try:
-        r = redis.from_url(settings.REDIS_URL, decode_responses=True)
+        r = redis.from_url(settings.redis_url, decode_responses=True)
     except:
         r = None
 

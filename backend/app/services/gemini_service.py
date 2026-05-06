@@ -5,7 +5,7 @@ import google.generativeai as genai
 from app.config import settings
 from app.prompts import build_system_prompt
 
-genai.configure(api_key=settings.GEMINI_API_KEY)
+genai.configure(api_key=settings.gemini_api_key)
 model = genai.GenerativeModel("gemini-2.5-flash-lite")
 
 def parse_gemini_response(full_text: str):

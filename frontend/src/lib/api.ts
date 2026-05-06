@@ -1,4 +1,5 @@
 import type {
+  ChatApiResponse,
   Health,
   Heatmap,
   LiveStats,
@@ -103,4 +104,42 @@ export const api = {
     ),
 
   heatmap: () => tryReq<Heatmap>('/api/intelligence/heatmap', MOCK_HEATMAP),
+
+  chat: async (
+    message?: string,
+    audioBlob?: Blob,
+    history: Array<{ role: string; content: string }> = []
+  ): Promise<ChatApiResponse> => {
+    const form = new FormData();
+    if (message) form.append('message', message);
+    form.append('history', JSON.stringify(history));
+    if (audioBlob) form.append('audio', audioBlob, 'recording.webm');
+
+    const res = await fetch(`${BASE}/chat/`, {
+      method: 'POST',
+      body: form,
+      cache: 'no-store',
+    });
+    if (!res.ok) {
+      const text = await res.text().catch(() => '');
+      throw new Error(`${res.status} ${res.statusText} — ${text}`);
+    }
+    return res.json() as Promise<ChatApiResponse>;
+  },
+
+  tts: async (text: string, language = 'en'): Promise<Blob | null> => {
+    try {
+      const res = await fetch(`${BASE}/chat/tts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, language }),
+        cache: 'no-store',
+      });
+      if (!res.ok) return null;
+      const blob = await res.blob();
+      return blob.size > 0 ? blob : null;
+    } catch {
+      return null;
+    }
+  },
 };

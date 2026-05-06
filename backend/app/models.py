@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from datetime import datetime
 
 from sqlalchemy import (
@@ -11,6 +10,8 @@ from sqlalchemy import (
     Text,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from pydantic import BaseModel
+from typing import List, Dict, Optional
 
 from .db import Base
 
@@ -118,10 +119,9 @@ class AutoReply(Base):
     body: Mapped[str] = mapped_column(Text)
     posted_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     simulated: Mapped[bool] = mapped_column(Boolean, default=True)
-=======
-from pydantic import BaseModel
-from typing import List, Dict, Optional
 
+
+# Pydantic schemas for API requests/responses
 class ChatRequest(BaseModel):
     message: str
     history: Optional[List[Dict[str, str]]] = []   # [{"role": "user", "content": "..."}, ...]
@@ -142,4 +142,3 @@ class TTSRequest(BaseModel):
 class TTSResponse(BaseModel):
     audio_url: str               # URL of generated audio (Spitch returns a direct URL)
     duration_sec: float
->>>>>>> 1913034eb5a34835c31253f370bb57628222bdc3

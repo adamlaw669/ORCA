@@ -133,3 +133,30 @@ export interface Health {
   apify_configured: boolean;
   anthropic_configured: boolean;
 }
+
+export interface ChatMeta {
+  classification: string;
+  churn_score: number;
+  summary: string;
+  detected_language: string;
+  action_taken?: string | null;
+}
+
+export interface ChatApiResponse {
+  reply: string;
+  classification: string;
+  churn_score: number;
+  summary: string;
+  detected_language: string;
+  action_taken?: string | null;
+}
+
+export interface VoiceMessage {
+  id: string;
+  role: 'user' | 'agent';
+  text: string;
+  audioBlob?: Blob;
+  ttsBlob?: Blob;
+  meta?: ChatMeta;
+  timestamp: Date;
+}

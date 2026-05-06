@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import {
   RiDashboardLine,
   RiInboxLine,
+  RiMicLine,
   RiPulseLine,
   RiBarChartGroupedLine,
   RiArrowLeftLine,
@@ -15,6 +16,7 @@ const NAV = [
   { href: '/dashboard', label: 'Overview', Icon: RiDashboardLine },
   { href: '/dashboard/queue', label: 'Agent queue', Icon: RiInboxLine, badge: true },
   { href: '/dashboard/mentions', label: 'Mentions', Icon: RiPulseLine },
+  { href: '/dashboard/voice', label: 'Voice Agent', Icon: RiMicLine },
   { href: '/dashboard/reports', label: 'Reports', Icon: RiBarChartGroupedLine },
 ];
 
