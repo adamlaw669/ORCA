@@ -69,8 +69,8 @@ export default function QueuePage() {
                 onClick={() => setFilter(r)}
                 className={`inline-flex h-7 items-center gap-1.5 rounded-sm px-2.5 font-data text-[11px] font-semibold uppercase tracking-label transition-colors ${
                   filter === r
-                    ? 'bg-ink-1 text-white'
-                    : 'text-ink-2 hover:bg-canvas-sunken'
+                    ? 'bg-accent text-ink-inverse'
+                    : 'text-ink-2 hover:bg-canvas-sunken hover:text-ink-1'
                 }`}
               >
                 {r}
@@ -83,7 +83,7 @@ export default function QueuePage() {
               type="checkbox"
               checked={openOnly}
               onChange={(e) => setOpenOnly(e.target.checked)}
-              className="h-3.5 w-3.5 rounded-sm accent-ink-1"
+              className="h-3.5 w-3.5 rounded-sm accent-[#FACC15]"
             />
             Show only open
           </label>
@@ -93,7 +93,7 @@ export default function QueuePage() {
           <Skeleton />
         ) : filtered.length === 0 ? (
           <div className="rounded-lg border border-dashed border-chrome-1 bg-canvas-elevated p-10 text-center">
-            <RiInboxArchiveLine size={28} className="mx-auto text-ink-3" />
+            <RiInboxArchiveLine size={28} className="mx-auto text-accent" />
             <p className="mt-2 text-[14px] font-semibold text-ink-1">Queue is clear</p>
             <p className="mt-1 text-[12px] text-ink-3">No open escalations match your filter.</p>
           </div>

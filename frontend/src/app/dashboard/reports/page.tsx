@@ -22,9 +22,9 @@ import { api } from '@/lib/api';
 import type { Heatmap, LiveStats, PriorityRow } from '@/lib/types';
 
 const PATHWAY_COLOR: Record<string, string> = {
-  AUTO_REPLY: '#059669',
-  AGENT_PING: '#D97706',
-  ESCALATE_FLAG: '#DC2626',
+  AUTO_REPLY: '#22C55E',
+  AGENT_PING: '#FACC15',
+  ESCALATE_FLAG: '#EF4444',
 };
 
 export default function ReportsPage() {
@@ -71,7 +71,7 @@ export default function ReportsPage() {
                 key={d}
                 onClick={() => setDays(d)}
                 className={`h-7 rounded-sm px-3 font-data text-[11px] font-semibold uppercase tracking-label transition-colors ${
-                  days === d ? 'bg-ink-1 text-white' : 'text-ink-2 hover:bg-canvas-sunken'
+                  days === d ? 'bg-accent text-ink-inverse' : 'text-ink-2 hover:bg-canvas-sunken hover:text-ink-1'
                 }`}
               >
                 {d}d
@@ -131,16 +131,17 @@ export default function ReportsPage() {
                   </Pie>
                   <Tooltip
                     contentStyle={{
-                      background: '#FFFFFF',
-                      border: '1px solid #E5E7EB',
+                      background: '#0A0A0A',
+                      border: '1px solid #262626',
                       borderRadius: 6,
                       fontSize: 12,
                       fontFamily: 'DM Mono, monospace',
+                      color: '#FAFAFA',
                     }}
                   />
                   <Legend
                     iconType="square"
-                    wrapperStyle={{ fontSize: 11, fontFamily: 'Inter', color: '#4B5563' }}
+                    wrapperStyle={{ fontSize: 11, fontFamily: 'Inter', color: '#A3A3A3' }}
                   />
                 </PieChart>
               </ResponsiveContainer>
@@ -153,26 +154,27 @@ export default function ReportsPage() {
           <div className="mt-3 h-[260px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={stats?.by_category ?? []} margin={{ left: 0, right: 8, top: 8, bottom: 36 }}>
-                <CartesianGrid stroke="#F3F4F6" vertical={false} />
+                <CartesianGrid stroke="#1C1C1C" vertical={false} />
                 <XAxis
                   dataKey="category"
-                  tick={{ fill: '#4B5563', fontSize: 10, fontFamily: 'Inter' }}
+                  tick={{ fill: '#A3A3A3', fontSize: 10, fontFamily: 'Inter' }}
                   angle={-18}
                   height={60}
                   textAnchor="end"
                 />
-                <YAxis tick={{ fill: '#9CA3AF', fontSize: 10, fontFamily: 'DM Mono' }} />
+                <YAxis tick={{ fill: '#6B7280', fontSize: 10, fontFamily: 'DM Mono' }} />
                 <Tooltip
-                  cursor={{ fill: '#F3F4F6' }}
+                  cursor={{ fill: 'rgba(250,204,21,0.06)' }}
                   contentStyle={{
-                    background: '#FFFFFF',
-                    border: '1px solid #E5E7EB',
+                    background: '#0A0A0A',
+                    border: '1px solid #262626',
                     borderRadius: 6,
                     fontSize: 12,
                     fontFamily: 'DM Mono, monospace',
+                    color: '#FAFAFA',
                   }}
                 />
-                <Bar dataKey="count" fill="#111111" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="count" fill="#FACC15" radius={[3, 3, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

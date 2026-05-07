@@ -18,7 +18,10 @@ export default function PriorityMatrix({ rows }: { rows: PriorityRow[] }) {
         </thead>
         <tbody>
           {rows.map((r) => (
-            <tr key={r.category} className="border-b border-chrome-1/60 last:border-b-0">
+            <tr
+              key={r.category}
+              className="border-b border-chrome-1/60 transition-colors last:border-b-0 hover:bg-canvas-sunken/40"
+            >
               <td className="px-4 py-3 font-medium text-ink-1">{r.category}</td>
               <Td>{r.volume}</Td>
               <Td>{r.avg_urgency.toFixed(1)}</Td>
@@ -62,7 +65,7 @@ function Td({ children, emphasis = false }: { children: React.ReactNode; emphasi
   return (
     <td
       className={`px-4 py-3 text-right font-data tabular-nums ${
-        emphasis ? 'font-semibold text-ink-1' : 'text-ink-2'
+        emphasis ? 'font-semibold text-accent' : 'text-ink-2'
       }`}
     >
       {children}

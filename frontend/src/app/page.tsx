@@ -61,7 +61,7 @@ function useCountDown(from: number, to: number, duration: number, trigger: boole
 function PrimaryButton({ children, fullWidth = false }: { children: React.ReactNode; fullWidth?: boolean }) {
   return (
     <button
-      className={`h-11 px-6 bg-[#111111] text-white rounded-lg text-sm font-medium whitespace-nowrap transition-colors duration-150 hover:bg-black active:scale-[0.98] cursor-pointer${fullWidth ? ' w-full' : ''}`}
+      className={`h-11 px-6 bg-[#FACC15] text-[#0A0A0A] rounded-lg text-sm font-semibold whitespace-nowrap transition-colors duration-150 hover:bg-[#FDE047] active:scale-[0.98] cursor-pointer shadow-[0_0_0_1px_rgba(250,204,21,0.4),0_8px_24px_-8px_rgba(250,204,21,0.5)]${fullWidth ? ' w-full' : ''}`}
     >
       {children}
     </button>
@@ -71,7 +71,7 @@ function PrimaryButton({ children, fullWidth = false }: { children: React.ReactN
 function GhostButton({ children, fullWidth = false }: { children: React.ReactNode; fullWidth?: boolean }) {
   return (
     <button
-      className={`h-11 px-6 bg-[#F3F4F6] text-[#111111] rounded-lg text-sm font-medium border border-[#E5E7EB] whitespace-nowrap transition-colors duration-150 hover:bg-[#E5E7EB] cursor-pointer${fullWidth ? ' w-full' : ''}`}
+      className={`h-11 px-6 bg-transparent text-[#FAFAFA] rounded-lg text-sm font-medium border border-[#262626] whitespace-nowrap transition-colors duration-150 hover:bg-[#141414] hover:border-[#404040] cursor-pointer${fullWidth ? ' w-full' : ''}`}
     >
       {children}
     </button>
@@ -84,16 +84,18 @@ function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-[#E5E7EB] bg-[rgba(250,250,250,0.9)] backdrop-blur-md">
+    <nav className="sticky top-0 z-50 border-b border-[#1A1A1A] bg-[rgba(10,10,10,0.85)] backdrop-blur-md">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-20 h-16 flex items-center justify-between">
-        <span className="font-bold text-base tracking-[0.04em] text-[#111111]">ORCA</span>
+        <span className="font-bold text-base tracking-[0.04em] text-[#FAFAFA]">
+          ORCA<span className="text-[#FACC15]">.</span>
+        </span>
 
         <div className="hidden md:flex gap-8 items-center">
           {['Features', 'How it works', 'For operators'].map((link) => (
             <a
               key={link}
               href={`#${link.toLowerCase().replace(/ /g, '-')}`}
-              className="text-sm font-medium text-[#4B5563] hover:text-[#111111] transition-colors duration-150 no-underline"
+              className="text-sm font-medium text-[#A3A3A3] hover:text-[#FACC15] transition-colors duration-150 no-underline"
             >
               {link}
             </a>
@@ -106,7 +108,7 @@ function Navbar() {
         </div>
 
         <button
-          className="md:hidden p-2 text-[#4B5563] hover:text-[#111111] transition-colors"
+          className="md:hidden p-2 text-[#A3A3A3] hover:text-[#FACC15] transition-colors"
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
         >
@@ -115,12 +117,12 @@ function Navbar() {
       </div>
 
       {open && (
-        <div className="md:hidden bg-white border-t border-[#E5E7EB] px-4 py-4 flex flex-col gap-3">
+        <div className="md:hidden bg-[#0A0A0A] border-t border-[#1A1A1A] px-4 py-4 flex flex-col gap-3">
           {['Features', 'How it works', 'For operators'].map((link) => (
             <a
               key={link}
               href={`#${link.toLowerCase().replace(/ /g, '-')}`}
-              className="text-sm font-medium text-[#4B5563] hover:text-[#111111] py-2 no-underline"
+              className="text-sm font-medium text-[#A3A3A3] hover:text-[#FACC15] py-2 no-underline"
               onClick={() => setOpen(false)}
             >
               {link}
@@ -138,9 +140,15 @@ function Navbar() {
 
 /* ─── Hero ───────────────────────────────────────────────────── */
 
-function HeroCalloutChip({ label }: { label: string }) {
+function HeroCalloutChip({ label, accent = false }: { label: string; accent?: boolean }) {
   return (
-    <div className="bg-white border border-[#E5E7EB] rounded-lg px-3 py-1.5 text-xs font-medium text-[#111111] shadow-[0_2px_8px_rgba(0,0,0,0.06)] whitespace-nowrap">
+    <div
+      className={`rounded-lg px-3 py-1.5 text-xs font-medium whitespace-nowrap shadow-[0_4px_16px_rgba(0,0,0,0.5)] border ${
+        accent
+          ? 'bg-[#FACC15] text-[#0A0A0A] border-[#FDE047]'
+          : 'bg-[#141414] text-[#FAFAFA] border-[#262626]'
+      }`}
+    >
       {label}
     </div>
   );
@@ -148,19 +156,33 @@ function HeroCalloutChip({ label }: { label: string }) {
 
 function Hero() {
   return (
-    <section className="bg-[#FAFAFA] px-4 sm:px-6 lg:px-20 py-14 lg:py-24">
-      <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-10 lg:gap-16 items-center">
+    <section className="relative bg-[#0A0A0A] px-4 sm:px-6 lg:px-20 py-14 lg:py-24 overflow-hidden">
+      {/* ambient yellow glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full blur-[120px] opacity-20"
+        style={{ background: 'radial-gradient(circle, #FACC15 0%, transparent 70%)' }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-40 -right-20 h-[400px] w-[400px] rounded-full blur-[120px] opacity-10"
+        style={{ background: 'radial-gradient(circle, #FACC15 0%, transparent 70%)' }}
+      />
+
+      <div className="relative max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-10 lg:gap-16 items-center">
 
         <div>
-          <p className="text-xs font-semibold text-[#9CA3AF] uppercase tracking-[0.1em] mb-6">
+          <p className="inline-flex items-center gap-2 text-xs font-semibold text-[#FACC15] uppercase tracking-[0.1em] mb-6">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#FACC15] animate-pulse" />
             Omnichannel retention AI for Nigerian telecoms
           </p>
 
-          <h1 className="font-bold text-[36px] sm:text-[44px] lg:text-[56px] text-[#111111] leading-[1.15] tracking-[-0.02em] max-w-[520px] mb-5">
-            Your subscriber just tweeted their way out. ORCA caught it.
+          <h1 className="font-bold text-[36px] sm:text-[44px] lg:text-[56px] text-[#FAFAFA] leading-[1.15] tracking-[-0.02em] max-w-[560px] mb-5">
+            Your subscriber just tweeted their way out.{' '}
+            <span className="text-[#FACC15]">ORCA caught it.</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-[#4B5563] leading-relaxed max-w-[460px] mb-10">
+          <p className="text-base sm:text-lg text-[#A3A3A3] leading-relaxed max-w-[460px] mb-10">
             The omnichannel retention platform built for MTN, Airtel, Glo, and 9mobile.
             Voice complaints and X posts. One queue. One score. One action.
           </p>
@@ -171,10 +193,10 @@ function Hero() {
           </div>
 
           <div className="mt-10">
-            <p className="text-xs text-[#9CA3AF] mb-3">Trusted by retention teams at</p>
+            <p className="text-xs text-[#737373] mb-3 uppercase tracking-[0.1em]">Trusted by retention teams at</p>
             <div className="flex flex-wrap gap-5 items-center">
               {['MTN', 'AIRTEL', 'GLO', '9MOBILE'].map((op) => (
-                <span key={op} className="font-mono text-sm font-medium text-[#9CA3AF] tracking-[0.04em]">
+                <span key={op} className="font-mono text-sm font-medium text-[#737373] tracking-[0.08em] hover:text-[#FACC15] transition-colors">
                   {op}
                 </span>
               ))}
@@ -183,17 +205,18 @@ function Hero() {
         </div>
 
         <div className="relative mt-4 lg:mt-0">
-          <div className="rounded-xl border border-[#E5E7EB] shadow-[0_16px_48px_rgba(0,0,0,0.1)] overflow-hidden">
+          <div className="rounded-xl border border-[#262626] bg-[#141414] shadow-[0_24px_64px_rgba(0,0,0,0.6),0_0_0_1px_rgba(250,204,21,0.08)] overflow-hidden">
             <ImagePlaceholder
               imageNumber={1}
               description="Agent dashboard - queue with subscriber profile panel"
               width="100%"
               height="300px"
+              dark
             />
           </div>
 
           <div className="hidden sm:block absolute -top-4 right-0 lg:-right-4">
-            <HeroCalloutChip label="Churn score 94 - flagged across 3 complaints" />
+            <HeroCalloutChip accent label="Churn score 94 - flagged across 3 complaints" />
           </div>
           <div className="hidden sm:block absolute bottom-14 left-0 lg:-left-4">
             <HeroCalloutChip label="Assigned: Agent Yemi - SLA 4h remaining" />
@@ -209,53 +232,51 @@ function Hero() {
 
 /* ─── Problem Statement ──────────────────────────────────────── */
 
-function ProblemCard({ icon, iconColor, title, body, stat }: {
-  icon: React.ReactNode; iconColor: string; title: string; body: string; stat: string;
+function ProblemCard({ icon, title, body, stat }: {
+  icon: React.ReactNode; title: string; body: string; stat: string;
 }) {
   return (
-    <div className="flex-1 bg-[#FAFAFA] border border-[#E5E7EB] rounded-xl p-6 lg:p-7">
-      <div style={{ color: iconColor }}>{icon}</div>
-      <h3 className="text-base font-semibold text-[#111111] mt-4">{title}</h3>
-      <p className="text-sm text-[#6B7280] mt-2 leading-relaxed">{body}</p>
-      <p className="font-mono text-2xl font-medium text-[#DC2626] mt-4">{stat}</p>
+    <div className="flex-1 bg-[#141414] border border-[#262626] rounded-xl p-6 lg:p-7 transition-colors hover:border-[#FACC15]/40">
+      <div className="text-[#FACC15]">{icon}</div>
+      <h3 className="text-base font-semibold text-[#FAFAFA] mt-4">{title}</h3>
+      <p className="text-sm text-[#A3A3A3] mt-2 leading-relaxed">{body}</p>
+      <p className="font-mono text-2xl font-medium text-[#FACC15] mt-4">{stat}</p>
     </div>
   );
 }
 
 function ProblemStatement() {
   return (
-    <section id="how-it-works" className="bg-white px-4 sm:px-6 lg:px-20 py-14 lg:py-20">
+    <section id="how-it-works" className="bg-[#000000] px-4 sm:px-6 lg:px-20 py-14 lg:py-20 border-y border-[#1A1A1A]">
       <div className="max-w-[1200px] mx-auto">
-        <h2 className="text-2xl sm:text-[28px] font-semibold text-[#111111] text-center max-w-[560px] mx-auto mb-10 leading-snug">
-          The problem with churn is you find out after.
+        <h2 className="text-2xl sm:text-[28px] font-semibold text-[#FAFAFA] text-center max-w-[560px] mx-auto mb-10 leading-snug">
+          The problem with churn is{' '}
+          <span className="text-[#FACC15]">you find out after.</span>
         </h2>
 
         <div className="flex flex-col md:flex-row gap-6">
           <ProblemCard
             icon={<RiPhoneLine size={32} />}
-            iconColor="#DC2626"
             title="Voice complaints go to CRM, buried."
             body="Call logs pile up unread. The agent who took the call moved on. Babatunde is still waiting."
             stat="Avg response: 48h"
           />
           <ProblemCard
             icon={<FaXTwitter size={32} />}
-            iconColor="#DC2626"
             title="Twitter / X complaints go nowhere."
             body="Your social team sees the tweet on Monday. The subscriber ported out on Friday."
             stat="Avg response: 72h"
           />
           <ProblemCard
             icon={<RiBarChartGroupedLine size={32} />}
-            iconColor="#D97706"
             title="Usage drop-offs never get flagged."
             body="A subscriber drops from 10GB to 0.2GB. Nothing alerts. No one calls. Until they leave."
             stat="Not tracked at all."
           />
         </div>
 
-        <p className="text-lg font-semibold text-[#111111] text-center mt-12">
-          ORCA connects all three.
+        <p className="text-lg font-semibold text-[#FAFAFA] text-center mt-12">
+          ORCA <span className="text-[#FACC15]">connects all three.</span>
         </p>
       </div>
     </section>
@@ -266,31 +287,33 @@ function ProblemStatement() {
 
 function HowItWorks() {
   return (
-    <section className="bg-[#FAFAFA] px-4 sm:px-6 lg:px-20 py-14 lg:py-20">
+    <section className="bg-[#0A0A0A] px-4 sm:px-6 lg:px-20 py-14 lg:py-20">
       <div className="max-w-[1200px] mx-auto">
-        <h2 className="text-3xl sm:text-[36px] font-bold text-[#111111] text-center max-w-[560px] mx-auto mb-12 leading-tight tracking-[-0.02em]">
-          From complaint to resolved - in under 3 minutes.
+        <h2 className="text-3xl sm:text-[36px] font-bold text-[#FAFAFA] text-center max-w-[640px] mx-auto mb-12 leading-tight tracking-[-0.02em]">
+          From complaint to resolved —{' '}
+          <span className="text-[#FACC15]">in under 3 minutes.</span>
         </h2>
 
-        <div className="max-w-[800px] mx-auto mb-12 rounded-xl border border-[#E5E7EB] overflow-hidden">
+        <div className="max-w-[800px] mx-auto mb-12 rounded-xl border border-[#262626] bg-[#141414] overflow-hidden">
           <ImagePlaceholder
             imageNumber={2}
             description="ORCA data flow: voice + X input, intelligence layer, three outputs"
             width="100%"
             height="180px"
+            dark
           />
         </div>
 
         <div className="max-w-[640px] mx-auto flex flex-col gap-4 mb-12">
           {[
             'Subscriber Babatunde has called three times this week. Never resolved. He just tweeted at @MTNNigeria and said "never again."',
-            'ORCA sees both signals. Scores him 94. Routes him to a senior retention agent with full context - call history, tweets, usage - before he ports out.',
+            'ORCA sees both signals. Scores him 94. Routes him to a senior retention agent with full context — call history, tweets, usage — before he ports out.',
           ].map((text, i) => (
-            <p key={i} className="text-base text-[#4B5563] leading-relaxed text-center">{text}</p>
+            <p key={i} className="text-base text-[#A3A3A3] leading-relaxed text-center">{text}</p>
           ))}
         </div>
 
-        <div className="flex flex-wrap justify-center border border-[#E5E7EB] rounded-lg overflow-hidden w-fit mx-auto bg-white">
+        <div className="flex flex-wrap justify-center border border-[#262626] rounded-lg overflow-hidden w-fit mx-auto bg-[#141414]">
           {[
             { icon: <RiPhoneLine size={14} />, label: 'Voice calls' },
             { icon: <FaXTwitter size={14} />, label: 'X / Twitter' },
@@ -299,7 +322,7 @@ function HowItWorks() {
           ].map(({ icon, label, muted }, i, arr) => (
             <div
               key={label}
-              className={`flex items-center gap-2 px-4 py-2.5 text-[13px] font-medium ${muted ? 'text-[#9CA3AF]' : 'text-[#4B5563]'} ${i < arr.length - 1 ? 'border-r border-[#E5E7EB]' : ''}`}
+              className={`flex items-center gap-2 px-4 py-2.5 text-[13px] font-medium ${muted ? 'text-[#525252]' : 'text-[#FACC15]'} ${i < arr.length - 1 ? 'border-r border-[#262626]' : ''}`}
             >
               {icon}
               <span>{label}</span>
@@ -313,38 +336,41 @@ function HowItWorks() {
 
 /* ─── Feature Modules ────────────────────────────────────────── */
 
-function FeatureCard({ icon, iconColor, title, body, imageNumber, imageDescription }: {
-  icon: React.ReactNode; iconColor: string; title: string; body: string;
+function FeatureCard({ icon, title, body, imageNumber, imageDescription }: {
+  icon: React.ReactNode; title: string; body: string;
   imageNumber: number; imageDescription: string;
 }) {
   return (
-    <div className="bg-[#FAFAFA] border border-[#E5E7EB] rounded-2xl p-6 lg:p-8">
-      <ImagePlaceholder imageNumber={imageNumber} description={imageDescription} width="100%" height="180px" />
-      <div className="mt-6 mb-3" style={{ color: iconColor }}>{icon}</div>
-      <h3 className="text-xl font-semibold text-[#111111]">{title}</h3>
-      <p className="text-[15px] text-[#6B7280] mt-2 leading-relaxed">{body}</p>
+    <div className="group bg-[#141414] border border-[#262626] rounded-2xl p-6 lg:p-8 transition-all duration-200 hover:border-[#FACC15]/50 hover:shadow-[0_0_40px_-15px_rgba(250,204,21,0.4)]">
+      <div className="rounded-lg overflow-hidden border border-[#262626]">
+        <ImagePlaceholder imageNumber={imageNumber} description={imageDescription} width="100%" height="180px" dark />
+      </div>
+      <div className="mt-6 mb-3 text-[#FACC15]">{icon}</div>
+      <h3 className="text-xl font-semibold text-[#FAFAFA]">{title}</h3>
+      <p className="text-[15px] text-[#A3A3A3] mt-2 leading-relaxed">{body}</p>
     </div>
   );
 }
 
 function Features() {
   return (
-    <section id="features" className="bg-white px-4 sm:px-6 lg:px-20 py-14 lg:py-20">
+    <section id="features" className="bg-[#000000] px-4 sm:px-6 lg:px-20 py-14 lg:py-20 border-y border-[#1A1A1A]">
       <div className="max-w-[1200px] mx-auto">
-        <h2 className="text-3xl sm:text-[36px] font-bold text-[#111111] mb-10 tracking-[-0.02em]">
-          Four modules. One platform.
+        <p className="text-xs font-semibold text-[#FACC15] uppercase tracking-[0.1em] mb-3">The platform</p>
+        <h2 className="text-3xl sm:text-[36px] font-bold text-[#FAFAFA] mb-10 tracking-[-0.02em]">
+          Four modules. <span className="text-[#FACC15]">One platform.</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <FeatureCard icon={<RiPhoneLine size={32} />} iconColor="#2563EB" title="Voice AI Agent"
+          <FeatureCard icon={<RiPhoneLine size={32} />} title="Voice AI Agent"
             body="Handles calls in English, Yoruba, and Hausa. Retrieves CDR and billing context before the first word is spoken. Resolves or escalates with a full brief."
             imageNumber={3} imageDescription="Voice AI transcription and analysis interface" />
-          <FeatureCard icon={<FaXTwitter size={32} />} iconColor="#111111" title="Social Intelligence"
+          <FeatureCard icon={<FaXTwitter size={32} />} title="Social Intelligence"
             body="Monitors every mention of your brand handle in real time. Classifies, scores urgency, and auto-replies to resolvable complaints within 3 minutes."
             imageNumber={4} imageDescription="Live X/Twitter complaint monitoring stream" />
-          <FeatureCard icon={<RiUserUnfollowLine size={32} />} iconColor="#DC2626" title="Churn Risk Engine"
+          <FeatureCard icon={<RiUserUnfollowLine size={32} />} title="Churn Risk Engine"
             body="Every interaction builds a real-time churn score. HIGH and CRITICAL subscribers are surfaced to agents with personalised retention offers - before they port."
             imageNumber={5} imageDescription="Nigeria region churn risk heatmap" />
-          <FeatureCard icon={<RiDashboard3Line size={32} />} iconColor="#059669" title="Human-in-the-Loop"
+          <FeatureCard icon={<RiDashboard3Line size={32} />} title="Human-in-the-Loop"
             body="One queue. Voice and X escalations sorted by urgency. Agents see the full context before they open their mouth or type a word."
             imageNumber={1} imageDescription="Agent dashboard with queue and subscriber profile" />
         </div>
@@ -368,17 +394,17 @@ function AnimatedMetric({ render, label, trigger, delay = 0, divider = true }: {
 
   return (
     <div
-      className={`flex-1 text-center py-8 lg:py-0 ${divider ? 'border-b lg:border-b-0 lg:border-r border-[rgba(255,255,255,0.15)]' : ''}`}
+      className={`flex-1 text-center py-8 lg:py-0 ${divider ? 'border-b lg:border-b-0 lg:border-r border-[rgba(250,204,21,0.2)]' : ''}`}
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(12px)',
         transition: 'opacity 400ms ease-out, transform 400ms ease-out',
       }}
     >
-      <p className="font-mono text-[40px] sm:text-[48px] font-medium text-white leading-tight">
+      <p className="font-mono text-[40px] sm:text-[48px] font-medium text-[#FACC15] leading-tight">
         {render(visible)}
       </p>
-      <p className="text-sm text-[rgba(255,255,255,0.5)] mt-2">{label}</p>
+      <p className="text-sm text-[#A3A3A3] mt-2 uppercase tracking-[0.1em]">{label}</p>
     </div>
   );
 }
@@ -402,15 +428,23 @@ function MetricsStrip() {
   return (
     <section
       ref={ref as React.RefObject<HTMLElement>}
-      className="bg-[#111111] px-4 sm:px-6 lg:px-20 py-12 lg:py-16"
+      className="relative bg-[#FACC15] px-4 sm:px-6 lg:px-20 py-12 lg:py-16 overflow-hidden"
     >
-      <div className="max-w-[1200px] mx-auto flex flex-col lg:flex-row items-stretch lg:items-center">
-        <AnimatedMetric label="Response time" trigger={triggered} delay={0} render={(a) => <ResponseMetric trigger={a} />} />
-        <AnimatedMetric label="Churn rate" trigger={triggered} delay={150} render={(a) => <ChurnMetric trigger={a} />} />
-        <AnimatedMetric label="Revenue protected" trigger={triggered} delay={300} divider={false} render={(a) => <RevenueMetric trigger={a} />} />
+      <div
+        aria-hidden
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            'repeating-linear-gradient(45deg, #000 0px, #000 1px, transparent 1px, transparent 12px)',
+        }}
+      />
+      <div className="relative max-w-[1200px] mx-auto flex flex-col lg:flex-row items-stretch lg:items-center">
+        <AnimatedMetricDark label="Response time" trigger={triggered} delay={0} render={(a) => <ResponseMetric trigger={a} />} />
+        <AnimatedMetricDark label="Churn rate" trigger={triggered} delay={150} render={(a) => <ChurnMetric trigger={a} />} />
+        <AnimatedMetricDark label="Revenue protected" trigger={triggered} delay={300} divider={false} render={(a) => <RevenueMetric trigger={a} />} />
       </div>
       <p
-        className="text-[13px] text-center mt-8 text-[rgba(255,255,255,0.4)]"
+        className="relative text-[13px] text-center mt-8 text-[rgba(10,10,10,0.6)] uppercase tracking-[0.1em] font-medium"
         style={{ opacity: triggered ? 1 : 0, transition: 'opacity 600ms ease-out 500ms' }}
       >
         Numbers from operator pilots.
@@ -419,21 +453,50 @@ function MetricsStrip() {
   );
 }
 
+function AnimatedMetricDark({ render, label, trigger, delay = 0, divider = true }: {
+  render: (t: boolean) => React.ReactNode; label: string;
+  trigger: boolean; delay?: number; divider?: boolean;
+}) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    if (!trigger) { setVisible(false); return; }
+    const t = setTimeout(() => setVisible(true), delay);
+    return () => clearTimeout(t);
+  }, [trigger, delay]);
+
+  return (
+    <div
+      className={`flex-1 text-center py-8 lg:py-0 ${divider ? 'border-b lg:border-b-0 lg:border-r border-[rgba(10,10,10,0.2)]' : ''}`}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(12px)',
+        transition: 'opacity 400ms ease-out, transform 400ms ease-out',
+      }}
+    >
+      <p className="font-mono text-[40px] sm:text-[48px] font-bold text-[#0A0A0A] leading-tight">
+        {render(visible)}
+      </p>
+      <p className="text-sm text-[rgba(10,10,10,0.65)] mt-2 uppercase tracking-[0.1em] font-semibold">{label}</p>
+    </div>
+  );
+}
+
 /* ─── Testimonial ────────────────────────────────────────────── */
 
 function Testimonial() {
   return (
-    <section className="bg-[#FAFAFA] px-4 sm:px-6 lg:px-20 py-14 lg:py-20">
-      <div className="max-w-[560px] mx-auto text-center">
-        <blockquote className="text-xl sm:text-[22px] text-[#111111] leading-relaxed">
-          &quot;ORCA changed how our retention team operates. We used to find out a customer churned
-          from the NCC report. Now we find out before they decide.&quot;
+    <section className="bg-[#0A0A0A] px-4 sm:px-6 lg:px-20 py-14 lg:py-20">
+      <div className="max-w-[640px] mx-auto text-center">
+        <p className="text-[#FACC15] font-mono text-4xl mb-4 leading-none">&ldquo;</p>
+        <blockquote className="text-xl sm:text-[22px] text-[#FAFAFA] leading-relaxed">
+          ORCA changed how our retention team operates. We used to find out a customer churned
+          from the NCC report. <span className="text-[#FACC15]">Now we find out before they decide.</span>
         </blockquote>
-        <p className="text-sm font-medium text-[#4B5563] mt-6">
-          Head of Customer Experience - [Operator Name]
+        <p className="text-sm font-medium text-[#A3A3A3] mt-6">
+          Head of Customer Experience — [Operator Name]
         </p>
-        <div className="w-20 h-6 bg-[#E5E7EB] rounded mx-auto mt-4 flex items-center justify-center">
-          <span className="font-mono text-[11px] text-[#9CA3AF]">LOGO</span>
+        <div className="w-20 h-6 bg-[#141414] border border-[#262626] rounded mx-auto mt-4 flex items-center justify-center">
+          <span className="font-mono text-[11px] text-[#525252]">LOGO</span>
         </div>
       </div>
     </section>
@@ -444,18 +507,24 @@ function Testimonial() {
 
 function FinalCTA() {
   return (
-    <section id="for-operators" className="bg-white px-4 sm:px-6 lg:px-20 py-14 lg:py-24 text-center">
-      <div className="max-w-[1200px] mx-auto">
-        <h2 className="text-3xl sm:text-[40px] font-bold text-[#111111] max-w-[560px] mx-auto leading-tight tracking-[-0.02em]">
-          Ready to stop losing subscribers you could have saved?
+    <section id="for-operators" className="relative bg-[#000000] px-4 sm:px-6 lg:px-20 py-14 lg:py-24 text-center overflow-hidden border-t border-[#1A1A1A]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[600px] rounded-full blur-[140px] opacity-15"
+        style={{ background: 'radial-gradient(circle, #FACC15 0%, transparent 70%)' }}
+      />
+      <div className="relative max-w-[1200px] mx-auto">
+        <h2 className="text-3xl sm:text-[40px] font-bold text-[#FAFAFA] max-w-[640px] mx-auto leading-tight tracking-[-0.02em]">
+          Ready to stop losing subscribers{' '}
+          <span className="text-[#FACC15]">you could have saved?</span>
         </h2>
-        <p className="text-base sm:text-lg text-[#4B5563] mt-4 max-w-[480px] mx-auto leading-relaxed">
+        <p className="text-base sm:text-lg text-[#A3A3A3] mt-4 max-w-[480px] mx-auto leading-relaxed">
           Request access and we&apos;ll configure ORCA for your operator&apos;s stack in 48 hours.
         </p>
         <div className="flex justify-center mt-10">
           <PrimaryButton>Request access</PrimaryButton>
         </div>
-        <p className="text-[13px] text-[#9CA3AF] mt-4">
+        <p className="text-[13px] text-[#737373] mt-4">
           MTN, Airtel, Glo, and 9mobile configurations available.
         </p>
       </div>
@@ -467,34 +536,36 @@ function FinalCTA() {
 
 function Footer() {
   return (
-    <footer className="bg-[#0F0F0F] border-t border-[#1F1F1F] px-4 sm:px-6 lg:px-20 py-12">
+    <footer className="bg-[#000000] border-t border-[#1A1A1A] px-4 sm:px-6 lg:px-20 py-12">
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 sm:grid-cols-3 gap-10">
         <div>
-          <span className="font-bold text-base tracking-[0.04em] text-white block mb-3">ORCA</span>
-          <p className="text-sm text-[rgba(255,255,255,0.5)] leading-relaxed max-w-[240px] mb-6">
+          <span className="font-bold text-base tracking-[0.04em] text-[#FAFAFA] block mb-3">
+            ORCA<span className="text-[#FACC15]">.</span>
+          </span>
+          <p className="text-sm text-[#A3A3A3] leading-relaxed max-w-[240px] mb-6">
             Omnichannel retention and complaint AI for Nigerian telecoms.
           </p>
-          <p className="text-[13px] text-[rgba(255,255,255,0.3)]">{new Date().getFullYear()} ORCA. All rights reserved.</p>
+          <p className="text-[13px] text-[#525252]">© {new Date().getFullYear()} ORCA. All rights reserved.</p>
         </div>
 
         <div>
-          <p className="text-xs font-semibold text-[rgba(255,255,255,0.3)] uppercase tracking-[0.08em] mb-4">Platform</p>
+          <p className="text-xs font-semibold text-[#FACC15] uppercase tracking-[0.08em] mb-4">Platform</p>
           {['Features', 'How it works', 'Request access', 'Login'].map((link) => (
             <a key={link} href="#"
-              className="block text-sm text-[rgba(255,255,255,0.5)] hover:text-[rgba(255,255,255,0.85)] transition-colors duration-150 no-underline mb-3">
+              className="block text-sm text-[#A3A3A3] hover:text-[#FACC15] transition-colors duration-150 no-underline mb-3">
               {link}
             </a>
           ))}
         </div>
 
         <div>
-          <p className="text-xs font-semibold text-[rgba(255,255,255,0.3)] uppercase tracking-[0.08em] mb-4">Contact</p>
+          <p className="text-xs font-semibold text-[#FACC15] uppercase tracking-[0.08em] mb-4">Contact</p>
           <a href="mailto:hello@orca.ai"
-            className="block text-sm text-[rgba(255,255,255,0.5)] hover:text-[rgba(255,255,255,0.85)] transition-colors duration-150 no-underline mb-3">
+            className="block text-sm text-[#A3A3A3] hover:text-[#FACC15] transition-colors duration-150 no-underline mb-3">
             hello@orca.ai
           </a>
           <a href="#"
-            className="inline-flex items-center gap-1.5 text-sm text-[rgba(255,255,255,0.5)] hover:text-[rgba(255,255,255,0.85)] transition-colors duration-150 no-underline">
+            className="inline-flex items-center gap-1.5 text-sm text-[#A3A3A3] hover:text-[#FACC15] transition-colors duration-150 no-underline">
             <FaXTwitter size={14} />
             @orca_ai
           </a>
@@ -508,7 +579,7 @@ function Footer() {
 
 export default function LandingPage() {
   return (
-    <main>
+    <main className="bg-[#0A0A0A] text-[#FAFAFA]">
       <Navbar />
       <Hero />
       <ProblemStatement />

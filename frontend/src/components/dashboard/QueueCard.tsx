@@ -83,7 +83,7 @@ export default function QueueCard({ item, onChanged }: Props) {
     <article
       className={`grid grid-cols-1 gap-0 overflow-hidden rounded-lg border bg-canvas-elevated md:grid-cols-[1.4fr_1fr] ${
         c.risk_level === 'CRITICAL'
-          ? 'border-status-critical/40 ring-1 ring-status-critical/10'
+          ? 'border-status-critical/50 ring-1 ring-status-critical/20'
           : 'border-chrome-1'
       }`}
     >
@@ -91,14 +91,14 @@ export default function QueueCard({ item, onChanged }: Props) {
       <div className="flex flex-col border-b border-chrome-1 p-5 md:border-b-0 md:border-r">
         <div className="flex items-start justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">
-            <div className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-canvas-sunken font-data text-[13px] font-semibold text-ink-2">
+            <div className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-canvas-sunken font-data text-[13px] font-semibold text-accent ring-1 ring-chrome-1">
               {(cust?.display_name || '?').slice(0, 1).toUpperCase()}
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-1.5 text-[14px] font-semibold text-ink-1">
                 <span className="truncate">{cust?.display_name || 'Unknown'}</span>
                 {cust?.verified ? (
-                  <RiVerifiedBadgeFill size={13} className="text-status-info" aria-label="Verified" />
+                  <RiVerifiedBadgeFill size={13} className="text-accent" aria-label="Verified" />
                 ) : null}
               </div>
               <div className="font-data text-[11px] text-ink-3">
@@ -127,7 +127,7 @@ export default function QueueCard({ item, onChanged }: Props) {
             href={m.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-auto inline-flex items-center gap-1 hover:text-ink-1"
+            className="ml-auto inline-flex items-center gap-1 hover:text-accent"
           >
             <FaXTwitter size={11} />
             Open on X
@@ -137,13 +137,13 @@ export default function QueueCard({ item, onChanged }: Props) {
         {/* AI reply editor */}
         <div className="mt-5 rounded-md border border-chrome-1 bg-canvas-sunken">
           <div className="flex items-center justify-between border-b border-chrome-1 px-3 py-2">
-            <span className="font-data text-[10px] font-semibold uppercase tracking-label text-ink-3">
+            <span className="font-data text-[10px] font-semibold uppercase tracking-label text-accent">
               AI-DRAFTED REPLY
             </span>
             <button
               onClick={regenerate}
               disabled={!!busy}
-              className="inline-flex items-center gap-1 rounded-sm px-2 py-0.5 text-[11px] font-medium text-ink-2 hover:bg-canvas-elevated disabled:opacity-50"
+              className="inline-flex items-center gap-1 rounded-sm px-2 py-0.5 text-[11px] font-medium text-ink-2 hover:bg-canvas-elevated hover:text-accent disabled:opacity-50"
               aria-label="Regenerate AI reply"
             >
               <RiRefreshLine size={11} className={busy === 'draft' ? 'animate-spin' : undefined} />
@@ -154,7 +154,7 @@ export default function QueueCard({ item, onChanged }: Props) {
             value={draft}
             onChange={(e) => setDraft(e.target.value.slice(0, REPLY_LIMIT))}
             rows={3}
-            className="block w-full resize-none bg-canvas-elevated px-3 py-2 font-sans text-[13px] leading-relaxed text-ink-1 outline-none focus:ring-2 focus:ring-ink-1/10"
+            className="block w-full resize-none bg-canvas px-3 py-2 font-sans text-[13px] leading-relaxed text-ink-1 outline-none focus:ring-2 focus:ring-accent/30"
             aria-label="Reply body"
           />
           <div className="flex items-center justify-between border-t border-chrome-1 px-3 py-2">
@@ -174,7 +174,7 @@ export default function QueueCard({ item, onChanged }: Props) {
               <button
                 disabled={!!busy || isFraud || draft.length === 0 || remaining < 0}
                 onClick={postReply}
-                className="inline-flex h-8 items-center gap-1.5 rounded-md bg-ink-1 px-3 text-[12px] font-semibold text-white transition-colors hover:bg-black disabled:cursor-not-allowed disabled:opacity-40"
+                className="inline-flex h-8 items-center gap-1.5 rounded-md bg-accent px-3 text-[12px] font-semibold text-ink-inverse transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <FaXTwitter size={11} />
                 Post to X
@@ -212,7 +212,7 @@ export default function QueueCard({ item, onChanged }: Props) {
           <ul className="mt-1.5 space-y-1 text-[12px] text-ink-2">
             {c.risk_factors.slice(0, 5).map((f) => (
               <li key={f} className="flex gap-1.5">
-                <span className="text-ink-3">•</span>
+                <span className="text-accent">•</span>
                 <span>{f}</span>
               </li>
             ))}
@@ -220,8 +220,8 @@ export default function QueueCard({ item, onChanged }: Props) {
         </section>
 
         {c.suggested_offer ? (
-          <section className="mt-4 rounded-md bg-status-clear-bg p-3 ring-1 ring-status-clear/20">
-            <SectionLabel className="text-status-clear">Suggested retention offer</SectionLabel>
+          <section className="mt-4 rounded-md bg-accent/10 p-3 ring-1 ring-accent/30">
+            <SectionLabel className="text-accent">Suggested retention offer</SectionLabel>
             <p className="mt-1 text-[13px] font-medium text-ink-1">{c.suggested_offer}</p>
           </section>
         ) : null}
@@ -230,7 +230,7 @@ export default function QueueCard({ item, onChanged }: Props) {
           <button
             disabled={!!busy || item.status === 'ACCEPTED'}
             onClick={() => action('accept')}
-            className="inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-md border border-chrome-1 bg-canvas-elevated text-[13px] font-medium text-ink-1 hover:bg-canvas-sunken disabled:opacity-50"
+            className="inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-md border border-chrome-1 bg-canvas-elevated text-[13px] font-medium text-ink-1 transition-colors hover:border-accent/50 hover:bg-canvas-sunken hover:text-accent disabled:opacity-50"
           >
             <RiUserAddLine size={14} />
             {item.status === 'ACCEPTED' ? `Owned by ${item.assigned_to}` : 'Accept'}
@@ -238,7 +238,7 @@ export default function QueueCard({ item, onChanged }: Props) {
           <button
             disabled={!!busy}
             onClick={() => action('resolve')}
-            className="inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-md bg-status-clear text-[13px] font-medium text-white hover:opacity-90 disabled:opacity-50"
+            className="inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-md bg-status-clear text-[13px] font-medium text-white transition-colors hover:opacity-90 disabled:opacity-50"
           >
             <RiCheckLine size={14} />
             Resolve
@@ -246,7 +246,7 @@ export default function QueueCard({ item, onChanged }: Props) {
           <button
             disabled={!!busy}
             onClick={() => action('dismiss')}
-            className="inline-flex h-9 items-center justify-center gap-1.5 rounded-md border border-chrome-1 px-3 text-[13px] font-medium text-ink-2 hover:bg-canvas-sunken disabled:opacity-50"
+            className="inline-flex h-9 items-center justify-center gap-1.5 rounded-md border border-chrome-1 px-3 text-[13px] font-medium text-ink-2 transition-colors hover:bg-canvas-sunken disabled:opacity-50"
           >
             <RiCloseLine size={14} />
             Dismiss

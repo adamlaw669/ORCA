@@ -1,9 +1,9 @@
 import type { Pathway, RiskLevel, Sentiment } from '@/lib/types';
 
 const RISK_STYLES: Record<RiskLevel, string> = {
-  LOW: 'bg-status-clear-bg text-status-clear ring-1 ring-status-clear/20',
-  MEDIUM: 'bg-status-watch-bg text-status-watch ring-1 ring-status-watch/20',
-  HIGH: 'bg-status-critical-bg text-status-high ring-1 ring-status-high/20',
+  LOW: 'bg-status-clear/15 text-status-clear ring-1 ring-status-clear/30',
+  MEDIUM: 'bg-accent/15 text-accent ring-1 ring-accent/30',
+  HIGH: 'bg-status-critical/15 text-status-high ring-1 ring-status-high/30',
   CRITICAL: 'bg-status-critical text-white ring-1 ring-status-critical animate-pulse-live',
 };
 
@@ -22,15 +22,15 @@ export function RiskBadge({ level, score }: { level: RiskLevel; score: number })
 
 const PATHWAY_STYLES: Record<Pathway, { cls: string; label: string }> = {
   AUTO_REPLY: {
-    cls: 'bg-status-clear-bg text-status-clear ring-1 ring-status-clear/20',
+    cls: 'bg-status-clear/15 text-status-clear ring-1 ring-status-clear/30',
     label: 'Auto-reply',
   },
   AGENT_PING: {
-    cls: 'bg-status-watch-bg text-status-watch ring-1 ring-status-watch/20',
+    cls: 'bg-accent/15 text-accent ring-1 ring-accent/30',
     label: 'Agent ping',
   },
   ESCALATE_FLAG: {
-    cls: 'bg-status-critical-bg text-status-critical ring-1 ring-status-critical/20',
+    cls: 'bg-status-critical/15 text-status-critical ring-1 ring-status-critical/30',
     label: 'Escalate',
   },
 };
@@ -45,11 +45,11 @@ export function PathwayBadge({ pathway }: { pathway: Pathway }) {
 }
 
 export function UrgencyBadge({ urgency }: { urgency: number }) {
-  const filled = '#111111';
-  const empty = '#E5E7EB';
+  const filled = '#FACC15';
+  const empty = '#262626';
   return (
     <span
-      className="inline-flex items-center gap-1 rounded-md bg-canvas-sunken px-2 py-0.5 text-[11px] font-semibold uppercase tracking-label text-ink-2"
+      className="inline-flex items-center gap-1 rounded-md bg-canvas-sunken px-2 py-0.5 text-[11px] font-semibold uppercase tracking-label text-ink-2 ring-1 ring-chrome-1"
       aria-label={`Urgency ${urgency} of 5`}
     >
       <span className="opacity-60">URG</span>
@@ -68,9 +68,9 @@ export function UrgencyBadge({ urgency }: { urgency: number }) {
 }
 
 const SENTIMENT_STYLES: Record<Sentiment, string> = {
-  negative: 'bg-status-critical-bg text-status-critical',
-  neutral: 'bg-canvas-sunken text-ink-2',
-  positive: 'bg-status-clear-bg text-status-clear',
+  negative: 'bg-status-critical/15 text-status-critical ring-1 ring-status-critical/30',
+  neutral: 'bg-canvas-sunken text-ink-2 ring-1 ring-chrome-1',
+  positive: 'bg-status-clear/15 text-status-clear ring-1 ring-status-clear/30',
 };
 
 export function SentimentBadge({ sentiment }: { sentiment: Sentiment }) {
@@ -93,7 +93,7 @@ export function LanguageChip({ language }: { language: string }) {
   const label =
     language === 'pcm' ? 'PIDGIN' : language === 'yo' ? 'YORUBA' : language === 'ha' ? 'HAUSA' : 'EN';
   return (
-    <span className="inline-flex items-center rounded-md bg-status-info/10 px-1.5 py-0.5 font-data text-[10px] font-semibold uppercase tracking-label text-status-info">
+    <span className="inline-flex items-center rounded-md bg-accent/15 px-1.5 py-0.5 font-data text-[10px] font-semibold uppercase tracking-label text-accent ring-1 ring-accent/30">
       {label}
     </span>
   );

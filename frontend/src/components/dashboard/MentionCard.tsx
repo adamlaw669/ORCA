@@ -15,17 +15,17 @@ export default function MentionCard({ mention, compact: dense = false }: { menti
   const c = mention.classification;
   const cust = mention.customer;
   return (
-    <article className="rounded-lg border border-chrome-1 bg-canvas-elevated p-4 transition-shadow hover:shadow-sm">
+    <article className="rounded-lg border border-chrome-1 bg-canvas-elevated p-4 transition-colors hover:border-chrome-2">
       <header className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-canvas-sunken font-data text-[12px] font-semibold text-ink-2">
+          <div className="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-canvas-sunken font-data text-[12px] font-semibold text-accent ring-1 ring-chrome-1">
             {(cust?.display_name || '?').slice(0, 1).toUpperCase()}
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-1.5 text-[13px] font-semibold text-ink-1">
               <span className="truncate">{cust?.display_name || 'Unknown'}</span>
               {cust?.verified ? (
-                <RiVerifiedBadgeFill size={12} className="text-status-info" aria-label="Verified" />
+                <RiVerifiedBadgeFill size={12} className="text-accent" aria-label="Verified" />
               ) : null}
             </div>
             <div className="font-data text-[11px] text-ink-3">
@@ -66,7 +66,7 @@ export default function MentionCard({ mention, compact: dense = false }: { menti
           href={mention.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-[12px] text-ink-3 hover:text-ink-1"
+          className="inline-flex items-center gap-1 text-[12px] text-ink-3 hover:text-accent"
         >
           <FaXTwitter size={11} />
           View on X

@@ -6,7 +6,7 @@ interface Props {
   hint?: ReactNode;
   trend?: { value: string; direction: 'up' | 'down' | 'flat' };
   icon?: ReactNode;
-  emphasis?: 'default' | 'positive' | 'warning' | 'critical';
+  emphasis?: 'default' | 'positive' | 'warning' | 'critical' | 'accent';
 }
 
 const EMPHASIS = {
@@ -14,14 +14,15 @@ const EMPHASIS = {
   positive: 'text-status-clear',
   warning: 'text-status-watch',
   critical: 'text-status-critical',
+  accent: 'text-accent',
 };
 
 export default function StatCard({ label, value, hint, trend, icon, emphasis = 'default' }: Props) {
   return (
-    <div className="rounded-lg border border-chrome-1 bg-canvas-elevated p-5">
+    <div className="group relative overflow-hidden rounded-lg border border-chrome-1 bg-canvas-elevated p-5 transition-colors hover:border-chrome-2">
       <div className="flex items-start justify-between">
         <p className="font-data text-[11px] font-semibold uppercase tracking-label text-ink-3">{label}</p>
-        {icon ? <span className="text-ink-3">{icon}</span> : null}
+        {icon ? <span className="text-accent">{icon}</span> : null}
       </div>
       <p className={`mt-3 font-data text-[32px] font-semibold leading-none tabular-nums ${EMPHASIS[emphasis]}`}>
         {value}

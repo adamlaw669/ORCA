@@ -118,25 +118,26 @@ export default function OverviewPage() {
                   layout="vertical"
                   margin={{ left: 4, right: 8, top: 0, bottom: 0 }}
                 >
-                  <CartesianGrid horizontal={false} stroke="#F3F4F6" />
-                  <XAxis type="number" tick={{ fill: '#9CA3AF', fontSize: 10, fontFamily: 'DM Mono' }} />
+                  <CartesianGrid horizontal={false} stroke="#1C1C1C" />
+                  <XAxis type="number" tick={{ fill: '#6B7280', fontSize: 10, fontFamily: 'DM Mono' }} />
                   <YAxis
                     dataKey="category"
                     type="category"
                     width={120}
-                    tick={{ fill: '#4B5563', fontSize: 11, fontFamily: 'Inter' }}
+                    tick={{ fill: '#A3A3A3', fontSize: 11, fontFamily: 'Inter' }}
                   />
                   <Tooltip
-                    cursor={{ fill: '#F3F4F6' }}
+                    cursor={{ fill: 'rgba(250,204,21,0.06)' }}
                     contentStyle={{
-                      background: '#FFFFFF',
-                      border: '1px solid #E5E7EB',
+                      background: '#0A0A0A',
+                      border: '1px solid #262626',
                       borderRadius: 6,
                       fontSize: 12,
                       fontFamily: 'DM Mono, monospace',
+                      color: '#FAFAFA',
                     }}
                   />
-                  <Bar dataKey="count" fill="#111111" radius={[0, 3, 3, 0]} />
+                  <Bar dataKey="count" fill="#FACC15" radius={[0, 3, 3, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -166,7 +167,7 @@ export default function OverviewPage() {
                   key={c.handle}
                   className="flex items-center gap-3 rounded-md border border-chrome-1 bg-canvas-sunken p-3"
                 >
-                  <span className="font-data text-[12px] text-ink-3">#{i + 1}</span>
+                  <span className="font-data text-[12px] text-accent">#{i + 1}</span>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-[13px] font-medium text-ink-1">{c.display_name}</p>
                     <p className="font-data text-[11px] text-ink-3">
@@ -178,8 +179,8 @@ export default function OverviewPage() {
                       c.risk >= 90
                         ? 'bg-status-critical text-white'
                         : c.risk >= 70
-                        ? 'bg-status-critical-bg text-status-high'
-                        : 'bg-status-watch-bg text-status-watch'
+                        ? 'bg-status-critical/15 text-status-high ring-1 ring-status-high/30'
+                        : 'bg-accent/15 text-accent ring-1 ring-accent/30'
                     }`}
                   >
                     {c.risk}

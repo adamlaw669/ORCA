@@ -40,7 +40,7 @@ export default function Topbar({ title, subtitle, onRefresh, liveCount }: Props)
   }, [scrapeMsg]);
 
   return (
-    <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-chrome-1 bg-canvas-elevated/90 px-8 backdrop-blur">
+    <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-chrome-1 bg-canvas-dark/90 px-8 backdrop-blur">
       <div>
         <div className="flex items-center gap-3">
           <h1 className="text-[18px] font-semibold text-ink-1">{title}</h1>
@@ -58,7 +58,7 @@ export default function Topbar({ title, subtitle, onRefresh, liveCount }: Props)
         <button
           onClick={trigger}
           disabled={scraping}
-          className="inline-flex h-9 items-center gap-2 rounded-md border border-chrome-1 bg-canvas-elevated px-3 text-[13px] font-medium text-ink-1 transition-colors hover:bg-canvas-sunken disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex h-9 items-center gap-2 rounded-md border border-chrome-1 bg-canvas-elevated px-3 text-[13px] font-medium text-ink-1 transition-colors hover:border-chrome-2 hover:bg-canvas-sunken disabled:cursor-not-allowed disabled:opacity-60"
           aria-label="Run Apify X scrape now"
         >
           <RiRefreshLine size={14} className={scraping ? 'animate-spin' : undefined} />
@@ -66,7 +66,7 @@ export default function Topbar({ title, subtitle, onRefresh, liveCount }: Props)
         </button>
         <button
           onClick={onRefresh}
-          className="inline-flex h-9 items-center gap-2 rounded-md bg-ink-1 px-3 text-[13px] font-medium text-white transition-colors hover:bg-black"
+          className="inline-flex h-9 items-center gap-2 rounded-md bg-accent px-3 text-[13px] font-semibold text-ink-inverse transition-colors hover:bg-accent-hover"
           aria-label="Refresh data"
         >
           <RiDownloadLine size={14} />
@@ -80,15 +80,15 @@ export default function Topbar({ title, subtitle, onRefresh, liveCount }: Props)
 function LiveDot({ count }: { count?: number }) {
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-full bg-status-clear-bg px-2 py-0.5 font-data text-[11px] font-semibold uppercase tracking-label text-status-clear"
+      className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-2 py-0.5 font-data text-[11px] font-semibold uppercase tracking-label text-accent ring-1 ring-accent/30"
       aria-label="Live monitoring"
     >
       <span className="relative flex h-2 w-2">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-status-clear opacity-60" />
-        <span className="relative inline-flex h-2 w-2 rounded-full bg-status-clear" />
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
+        <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
       </span>
       LIVE
-      {count !== undefined ? <span className="text-status-clear/80">· {count}</span> : null}
+      {count !== undefined ? <span className="text-accent/80">· {count}</span> : null}
     </span>
   );
 }

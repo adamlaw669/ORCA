@@ -16,16 +16,18 @@ export default function ImagePlaceholder({
   description,
   width = '100%',
   height = '240px',
-  dark = false,
+  dark = true,
   className = '',
 }: ImagePlaceholderProps) {
+  // Default to dark glass — the app is now black+yellow themed.
   const glassStyle: React.CSSProperties = dark
     ? {
-        background: 'rgba(255,255,255,0.06)',
+        background:
+          'linear-gradient(135deg, rgba(250,204,21,0.04) 0%, rgba(20,20,20,0.6) 100%)',
         backdropFilter: 'blur(20px) saturate(160%)',
         WebkitBackdropFilter: 'blur(20px) saturate(160%)',
-        border: '1px solid rgba(255,255,255,0.1)',
-        boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+        border: '1px solid rgba(250,204,21,0.12)',
+        boxShadow: '0 4px 24px rgba(0,0,0,0.5)',
       }
     : {
         background: 'rgba(255,255,255,0.55)',
@@ -43,14 +45,15 @@ export default function ImagePlaceholder({
     >
       <RiImageLine
         size={24}
-        style={{ color: dark ? 'rgba(255,255,255,0.3)' : '#9CA3AF' }}
+        style={{ color: dark ? 'rgba(250,204,21,0.5)' : '#9CA3AF' }}
       />
       <span
         style={{
           fontFamily: 'Inter, sans-serif',
           fontSize: '13px',
-          fontWeight: 500,
-          color: dark ? 'rgba(255,255,255,0.5)' : '#6B7280',
+          fontWeight: 600,
+          color: dark ? '#FACC15' : '#6B7280',
+          letterSpacing: '0.04em',
         }}
       >
         Image {imageNumber}
@@ -60,9 +63,10 @@ export default function ImagePlaceholder({
           fontFamily: 'Inter, sans-serif',
           fontSize: '12px',
           fontWeight: 400,
-          color: dark ? 'rgba(255,255,255,0.3)' : '#9CA3AF',
+          color: dark ? 'rgba(250,250,250,0.55)' : '#9CA3AF',
           textAlign: 'center',
-          maxWidth: '200px',
+          maxWidth: '220px',
+          padding: '0 12px',
         }}
       >
         {description}
@@ -71,7 +75,7 @@ export default function ImagePlaceholder({
         style={{
           fontFamily: '"DM Mono", monospace',
           fontSize: '11px',
-          color: dark ? 'rgba(255,255,255,0.2)' : '#D1D5DB',
+          color: dark ? 'rgba(250,250,250,0.3)' : '#D1D5DB',
           marginTop: '4px',
         }}
       >
